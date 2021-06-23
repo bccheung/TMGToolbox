@@ -1,18 +1,14 @@
 """
     Copyright 2014 Travel Modelling Group, Department of Civil Engineering, University of Toronto
-
     This file is part of the TMG Toolbox.
-
     The TMG Toolbox is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
-
     The TMG Toolbox is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
-
     You should have received a copy of the GNU General Public License
     along with the TMG Toolbox.  If not, see <http://www.gnu.org/licenses/>.
 """
@@ -52,8 +48,8 @@ class ExportNetworkPackage(m.Tool()):
     ExportMetadata = m.Attribute(str)
     ExportToEmmeOldVersion = m.Attribute(bool)
 
-    xtmf_AttributeIdString = m.Attribute(str)
-    xtmf_ScenarioNumber = m.Attribute(int)
+    export_attributes = m.Attribute(str)
+    scenario_number = m.Attribute(int)
 
     def __init__(self):
         self.TRACKER = _util.ProgressTracker(self.number_of_tasks)  # init the ProgressTracker
@@ -136,13 +132,13 @@ class ExportNetworkPackage(m.Tool()):
     def check_all_flag(self):
         return self.ExportAllFlag
 
-    def __call__(self, scenario_number, export_file, export_attributes):
+    def __call__(self, scenario_number, ExportFile, export_attributes):
 
         self.Scenario = mm.emmebank.scenario(scenario_number)
         if self.Scenario is None:
             raise Exception('Scenario %s was not found!' % scenario_number)
 
-        self.ExportFile = export_file
+        self.ExportFile = ExportFile
         if export_attributes.lower() == 'all':
             self.ExportAllFlag = True  # if true, self.AttributeIdsToExport gets set in execute
         else:
